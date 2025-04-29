@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    tools {
+    maven 'Maven 3.9'
+}
+    stages {
+        stage('Build') {
+            steps {
+                bat 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                bat 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage('Deliver') { 
+            steps {
+                echo 'Delivered Suceesfully!'
+            }
+        }
+          stage('Complete') { 
+            steps {
+                echo 'Completed Suceesfully!'
+            }
+        }
+        stage('Practice') { 
+            steps {
+                echo 'Practice Completed Suceesfully!'
+            }
+        }
+    }
+}
